@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "ES2015"],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+     "types": ["node"]
+  },
+  "include": ["."],
+  "exclude": ["dist", "build", "node_modules"]
+}
