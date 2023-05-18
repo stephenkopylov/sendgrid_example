@@ -7,7 +7,7 @@ import i18n from "../../locale/i18n";
 export const Footer: React.FC = () => {
     return (
         <Text>
-            {`Footer + ${i18n.t('TITLE')}`}
+            {`Footer 1 + ${i18n.t('TITLE')}`}
         </Text>
     );
 };

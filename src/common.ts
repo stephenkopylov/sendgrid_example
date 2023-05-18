@@ -1,19 +1,24 @@
+import {IsDefined} from "class-validator";
+
 export enum Templates {
     Email,
 }
 
-interface IQueryParams {
-    lang?: string;
-    template?: string;
+export class Query {
+    @IsDefined()
+    lang!: string;
+
+    @IsDefined()
+    template!: string;
 }
 
-export const queryCheck = (query: IQueryParams) => {
+export const queryCheck = (query: Query) => {
     if (!query.template) {
-        throw new Error('template is required')
+        throw new Error(`template is required in query params ${JSON.stringify(query)}`)
     } else {
         let found = false;
         Object.values(Templates).forEach((value) => {
-            if (value.toString().toLowerCase() === query.template.toLowerCase()) {
+            if (value.toString().toLowerCase() === query?.template?.toLowerCase()) {
                 found = true;
             }
         });
