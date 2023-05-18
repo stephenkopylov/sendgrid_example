@@ -1,4 +1,7 @@
 import {IsDefined} from "class-validator";
+import {RateApp, RateAppData} from "./emails";
+import {FC} from "react";
+import {Welcome, WelcomeData} from "./emails/Welcome";
 
 export enum Templates {
     RateApp,
@@ -19,6 +22,7 @@ export class Query {
     brand?: Brand;
 }
 
+
 export const getTemplateByName = (name: string): Templates => {
     for (let item in Templates) {
         if (isNaN(Number(item))) {
@@ -32,7 +36,6 @@ export const getTemplateByName = (name: string): Templates => {
     return Templates.Unknown;
 }
 
-
 export const getAllTemplates = (): string => {
     let result = "";
     for (let item in Templates) {
@@ -42,6 +45,41 @@ export const getAllTemplates = (): string => {
         }
     }
     return result;
+}
+
+interface ITemplateMetadata {
+    component: FC<any>,
+    dataClass: any
+}
+
+export const getTemplateMetadata = (template: Templates): ITemplateMetadata | null => {
+    let component: FC<any> | null = null;
+    let dataClass: any = null;
+
+    switch (template) {
+        case Templates.RateApp: {
+            component = RateApp;
+            dataClass = RateAppData;
+            break;
+        }
+        case Templates.Welcome: {
+            component = Welcome;
+            dataClass = WelcomeData;
+            break;
+        }
+        default: {
+            break;
+        }
+    }
+
+    if (component && dataClass) {
+        return {
+            component: component,
+            dataClass: dataClass
+        }
+    }
+
+    return null;
 }
 
 

@@ -10,13 +10,13 @@ import {
 import {Footer, Header} from "./components";
 import {IsDefined} from "class-validator";
 
-export class EmailData {
+export class RateAppData {
     @IsDefined()
     url!: string;
 }
 
 interface IEmailProps {
-    data: EmailData;
+    data: RateAppData;
 }
 
 export const RateApp: React.FC<IEmailProps> = props => {

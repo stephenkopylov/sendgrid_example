@@ -2,15 +2,13 @@ import {render} from '@react-email/render';
 import express from 'express';
 import * as React from 'react';
 import i18n from "./locale/i18n";
-import {RateApp, EmailData} from "./emails";
-import {getAllTemplates, getTemplateByName, Query, queryCheck, Templates} from "./common";
+import {getAllTemplates, getTemplateByName, getTemplateMetadata, Query, Templates} from "./common";
 import livereload from "livereload";
 import connectLiveReload from "connect-livereload";
 import {plainToInstance} from "class-transformer";
 import {validateMailData, validateQuery} from "./validator";
 import {Error} from "./Error";
 import {AddressInfo} from "net";
-import {Welcome, WelcomeData} from "./emails/Welcome";
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -32,32 +30,23 @@ app.use('/', async (req, res) => {
 
         const template = getTemplateByName(query.template)
 
-        switch (template) {
-            case Templates.RateApp: {
-                const data = plainToInstance(EmailData, req.query);
+        if (template != Templates.Unknown) {
+            const templateMetadata = getTemplateMetadata(template);
+
+            if (templateMetadata != null) {
+                const data = plainToInstance(templateMetadata.dataClass, req.query);
 
                 error = await validateMailData(data);
 
                 if (!error) {
-                    const emailHtml = render(<RateApp data={data}/>);
+                    const emailHtml = render(<templateMetadata.component data={data}/>);
                     res.send(emailHtml);
                 }
-                break;
-            }
-            case Templates.Welcome: {
-                const data = plainToInstance(WelcomeData, req.query);
-
-                error = await validateMailData(data);
-
-                if (!error) {
-                    const emailHtml = render(<Welcome data={data}/>);
-                    res.send(emailHtml);
-                }
-                break;
-            }
-            case Templates.Unknown: {
+            } else {
                 error = `Unknown template! Available templates: ${getAllTemplates()}`;
             }
+        } else {
+            error = `Unknown template! Available templates: ${getAllTemplates()}`;
         }
     }
 
