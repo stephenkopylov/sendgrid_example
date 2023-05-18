@@ -19,7 +19,7 @@ interface IEmailProps {
     data: EmailData;
 }
 
-export const Email: React.FC<IEmailProps> = props => {
+export const RateApp: React.FC<IEmailProps> = props => {
     const {data} = props;
     return (
         <Html>

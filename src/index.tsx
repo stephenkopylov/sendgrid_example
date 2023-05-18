@@ -2,16 +2,14 @@ import {render} from '@react-email/render';
 import express from 'express';
 import * as React from 'react';
 import i18n from "./locale/i18n";
-import {Email, EmailData} from "./emails";
-import {Query, queryCheck, Templates} from "./common";
+import {RateApp, EmailData} from "./emails";
+import {getTemplateByName, Query, queryCheck, Templates} from "./common";
 import livereload from "livereload";
 import connectLiveReload from "connect-livereload";
-import {validate} from "class-validator";
 import {plainToInstance} from "class-transformer";
 import {validateMailData, validateQuery} from "./validator";
 import {Error} from "./Error";
 import {AddressInfo} from "net";
-import {typeOf} from "uri-js/dist/esnext/util";
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -31,18 +29,22 @@ app.use('/', async (req, res) => {
     if (!error) {
         await i18n.changeLanguage(query.lang);
 
-        const template = Templates[query.template as keyof typeof Templates];
+        const template = getTemplateByName(query.template)
 
         switch (template) {
-            case Templates.Email: {
+            case Templates.RateApp: {
                 const data = plainToInstance(EmailData, req.query);
 
                 error = await validateMailData(data);
 
                 if (!error) {
-                    const emailHtml = render(<Email data={data}/>);
+                    const emailHtml = render(<RateApp data={data}/>);
                     res.send(emailHtml);
                 }
+                break;
+            }
+            case Templates.Unknown: {
+                error = "Unknown template";
             }
         }
     }
