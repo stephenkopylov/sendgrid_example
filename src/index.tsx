@@ -1,12 +1,12 @@
 import {render} from '@react-email/render';
 import express from 'express';
 import * as React from 'react';
-import {getAllTemplates, getTemplateByName, getTemplateMetadata, Query, Templates} from "./common";
+import {getAllTemplates, getTemplateByName, getTemplateMetadata, Query, Templates} from "./misc/common";
 import livereload from "livereload";
 import connectLiveReload from "connect-livereload";
 import {plainToInstance} from "class-transformer";
-import {validateMailData, validateQuery} from "./validator";
-import {Error} from "./Error";
+import {validateMailData, validateQuery} from "./misc/validator";
+import {Error} from "./misc/Error";
 import {AddressInfo} from "net";
 import {PayloadProvider} from "./providers/payloadProvider";
 

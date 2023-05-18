@@ -1,5 +1,5 @@
 import {createContext, memo, PropsWithChildren} from "react";
-import {Query} from "../common";
+import {Query} from "../misc/common";
 
 export const PayloadContext = createContext<Query>({} as Query);
 

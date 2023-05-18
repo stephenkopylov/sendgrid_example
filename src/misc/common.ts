@@ -1,6 +1,6 @@
 import {IsDefined} from "class-validator";
-import {RateApp, RateAppData} from "./emails";
-import {Welcome, WelcomeData} from "./emails";
+import {RateApp, RateAppData} from "../emails";
+import {Welcome, WelcomeData} from "../emails";
 import {FC} from "react";
 
 export enum Templates {
