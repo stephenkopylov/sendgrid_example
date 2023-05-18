@@ -1,23 +1,27 @@
 import {useBrand} from "./useBrand";
 
-import colorsEO from '../brands/eo/colorTheme.json'
-import colorsTickz from '../brands/tickz/colorTheme.json'
-import colorsNeutral from '../brands/neutral/colorTheme.json'
+import colorsEORaw from '../brands/eo/colorTheme.json'
+import colorsTickzRaw from '../brands/tickz/colorTheme.json'
+import colorsNeutralRaw from '../brands/neutral/colorTheme.json'
 import {plainToInstance} from "class-transformer";
 import {colors} from "../misc/colors";
+
+const colorsEO = plainToInstance(colors, colorsEORaw);
+const colorsTickz = plainToInstance(colors, colorsTickzRaw);
+const colorsNeutral = plainToInstance(colors, colorsNeutralRaw);
 
 export const useColors = () => {
     const brand = useBrand()
 
     switch (brand) {
         case 'eo': {
-            return plainToInstance(colors, colorsEO);
+            return colorsEO;
         }
         case `tickz`: {
-            return plainToInstance(colors, colorsTickz);
+            return colorsTickz;
         }
         default: {
-            return plainToInstance(colors, colorsNeutral);
+            return colorsNeutral;
         }
     }
 };
