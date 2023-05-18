@@ -20,7 +20,7 @@ liveReloadServer.server.once("connection", () => {
 let app = express();
 
 app.use(connectLiveReload());
-app.use('/public', express.static(__dirname + '/../public'));
+app.use('/', express.static(__dirname + '/'));
 app.use('/', async (req, res) => {
     const query = plainToInstance(Query, req.query);
     let error = await validateQuery(query);

@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
     const baseDomain = useBaseDomain();
     return (
         <>
-            <Img src={`${baseDomain}/public/brand/${brand}/logo.png`}
+            <Img src={`${baseDomain}/static/brand/${brand}/logo.png`}
                  style={{width: '100px', height: '100px'}}/>
             <Text>
                 {i18n.t('TITLE')}
