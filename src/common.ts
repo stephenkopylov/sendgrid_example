@@ -2,6 +2,7 @@ import {IsDefined} from "class-validator";
 
 export enum Templates {
     RateApp,
+    Welcome,
     Unknown
 }
 
@@ -29,6 +30,18 @@ export const getTemplateByName = (name: string): Templates => {
     }
 
     return Templates.Unknown;
+}
+
+
+export const getAllTemplates = (): string => {
+    let result = "";
+    for (let item in Templates) {
+        if (isNaN(Number(item)) && Templates[item as keyof typeof Templates] != Templates.Unknown) {
+            console.log(item);
+            result += item + ", ";
+        }
+    }
+    return result;
 }
 
 

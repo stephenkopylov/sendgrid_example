@@ -3,13 +3,14 @@ import express from 'express';
 import * as React from 'react';
 import i18n from "./locale/i18n";
 import {RateApp, EmailData} from "./emails";
-import {getTemplateByName, Query, queryCheck, Templates} from "./common";
+import {getAllTemplates, getTemplateByName, Query, queryCheck, Templates} from "./common";
 import livereload from "livereload";
 import connectLiveReload from "connect-livereload";
 import {plainToInstance} from "class-transformer";
 import {validateMailData, validateQuery} from "./validator";
 import {Error} from "./Error";
 import {AddressInfo} from "net";
+import {Welcome, WelcomeData} from "./emails/Welcome";
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -43,8 +44,19 @@ app.use('/', async (req, res) => {
                 }
                 break;
             }
+            case Templates.Welcome: {
+                const data = plainToInstance(WelcomeData, req.query);
+
+                error = await validateMailData(data);
+
+                if (!error) {
+                    const emailHtml = render(<Welcome data={data}/>);
+                    res.send(emailHtml);
+                }
+                break;
+            }
             case Templates.Unknown: {
-                error = "Unknown template";
+                error = `Unknown template! Available templates: ${getAllTemplates()}`;
             }
         }
     }
