@@ -29,7 +29,7 @@ export const RateApp: React.FC<IEmailProps> = props => {
             <Preview>Stack overflow tips for searching</Preview>
             <Body>
                 <Header/>
-                <Button style={{color: colors.Primary30.toString()}} href={data.url}>Click me</Button>
+                <Button style={{color: colors.Primary20.toString()}} href={data.url}>Click me</Button>
                 <Footer/>
             </Body>
         </Html>
