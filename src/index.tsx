@@ -1,7 +1,6 @@
 import {render} from '@react-email/render';
 import express from 'express';
 import * as React from 'react';
-import i18n from "./locale/i18n";
 import {getAllTemplates, getTemplateByName, getTemplateMetadata, Query, Templates} from "./common";
 import livereload from "livereload";
 import connectLiveReload from "connect-livereload";
@@ -9,6 +8,7 @@ import {plainToInstance} from "class-transformer";
 import {validateMailData, validateQuery} from "./validator";
 import {Error} from "./Error";
 import {AddressInfo} from "net";
+import {PayloadProvider} from "./providers/payloadProvider";
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -26,8 +26,6 @@ app.use('/', async (req, res) => {
     let error = await validateQuery(query);
 
     if (!error) {
-        await i18n.changeLanguage(query.lang);
-
         const template = getTemplateByName(query.template)
 
         if (template != Templates.Unknown) {
@@ -39,7 +37,11 @@ app.use('/', async (req, res) => {
                 error = await validateMailData(data);
 
                 if (!error) {
-                    const emailHtml = render(<templateMetadata.component data={data}/>);
+                    const emailHtml = render(
+                        <PayloadProvider query={query}>
+                            <templateMetadata.component data={data}/>
+                        </PayloadProvider>
+                    );
                     res.send(emailHtml);
                 }
             } else {

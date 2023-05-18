@@ -1,7 +1,7 @@
 import {IsDefined} from "class-validator";
 import {RateApp, RateAppData} from "./emails";
+import {Welcome, WelcomeData} from "./emails";
 import {FC} from "react";
-import {Welcome, WelcomeData} from "./emails/Welcome";
 
 export enum Templates {
     RateApp,
