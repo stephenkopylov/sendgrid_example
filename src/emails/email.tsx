@@ -6,12 +6,12 @@ import {
 } from '@react-email/components';
 import i18n from "../locale/i18n";
 
-interface EmailProps {
+interface IEmailProps {
     url: string;
-    lang: string;
 }
 
-export const Email: React.FC<Readonly<EmailProps>> = ({url}) => {
+export const Email: React.FC<IEmailProps> = props => {
+    const {url} = props;
     return (
         <Html>
             <Text>

@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 
     switch (template) {
         case Templates.Email: {
-            const emailHtml = render(<Email url={query.url}/>);
+            const emailHtml = render(<Email url={query.url as string}/>);
             res.send(emailHtml);
         }
     }
