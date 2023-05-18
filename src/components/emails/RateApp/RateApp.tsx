@@ -5,34 +5,32 @@ import {
     Head,
     Html,
     Preview,
+    Text,
 } from '@react-email/components';
-import {Footer, Header} from "../components";
 import {IsDefined} from "class-validator";
-import {useLanguage} from "../../hooks/useLanguage";
-import i18n from './locale/i18n';
+import {useColors} from "../../../hooks/useColors";
+import {Footer, Header} from "../..";
 
-export class WelcomeData {
+export class RateAppData {
     @IsDefined()
     url!: string;
 }
 
 interface IEmailProps {
-    data: WelcomeData;
+    data: RateAppData;
 }
 
-export const Welcome: React.FC<IEmailProps> = props => {
+export const RateApp: React.FC<IEmailProps> = props => {
     const {data} = props;
-    const lang = useLanguage();
-
-    i18n.changeLanguage(lang);
-
+    const colors = useColors();
     return (
         <Html>
             <Head/>
             <Preview>Stack overflow tips for searching</Preview>
             <Body>
                 <Header/>
-                <Button href={data.url}>Welcome</Button>
+                <Button style={{color: colors.Primary20.toString()}} href={data.url}>Click me</Button>
+                {/* eslint-disable-next-line react/jsx-no-undef */}
                 <Footer/>
             </Body>
         </Html>

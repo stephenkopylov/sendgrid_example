@@ -1,6 +1,6 @@
 import {IsDefined} from "class-validator";
-import {RateApp, RateAppData} from "../emails";
-import {Welcome, WelcomeData} from "../emails";
+import {RateApp, RateAppData} from "../components";
+import {Welcome, WelcomeData} from "../components";
 import {FC} from "react";
 
 export enum Templates {
@@ -20,6 +20,9 @@ export class Query {
 
     @IsDefined()
     brand?: Brand;
+
+    @IsDefined()
+    baseDomain: string = 'http://localhost:8081';
 }
 
 
