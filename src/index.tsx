@@ -10,6 +10,8 @@ import {validate} from "class-validator";
 import {plainToInstance} from "class-transformer";
 import {validateMailData, validateQuery} from "./validator";
 import {Error} from "./Error";
+import {AddressInfo} from "net";
+import {typeOf} from "uri-js/dist/esnext/util";
 
 const liveReloadServer = livereload.createServer();
 liveReloadServer.server.once("connection", () => {
@@ -52,5 +54,8 @@ app.use('/', async (req, res) => {
 })
 
 let server = app.listen(8081, function () {
-    console.log("Example app listening at http://%s:%s", server.address(), server.address())
+    const addressInfo = server.address() as AddressInfo;
+
+    console.log("Example app listening at http://%s:%s", addressInfo.address != "::" ? addressInfo.address : "localhost", addressInfo.port)
+
 })
